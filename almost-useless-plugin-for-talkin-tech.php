@@ -97,9 +97,13 @@ if (!class_exists('AUPTT')) :
          */
         public function show_post_subtitle($title, $id = null)
         {
+            // Evitamos filtrar o conteúdo que não seja o executado numa página interna
+            if(!is_single())
+                return $title;
+
             // Buscamos a nossa meta_key, com a informação que foi salva no banco de dados
             $post_subtitle = get_post_meta($id, '_post_subtitle', true);
-            if (isset($post_subtitle)) {
+            if (!empty($post_subtitle)) {
                 // Adicionamos junto ao título, o nosso subtítulo, encapsulado por uma tag HTML
                 $post_subtitle = '<h2>' . $post_subtitle . '</h2>';
                 return $title . $post_subtitle;
